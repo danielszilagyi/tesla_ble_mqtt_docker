@@ -18,10 +18,13 @@ else
   RED='\033[0;31m'
 fi
 
-# shellcheck disable=SC1089
-function log_debug   { [ "$DEBUG" = "true" ] && echo -e "${NOCOLOR}$1" || true; }
-function log_info    { echo -e "${GREEN}$1${NOCOLOR}"; }
-function log_notice  { echo -e "${CYAN}$1${NOCOLOR}"; }
-function log_warning { echo -e "${YELLOW}$1${NOCOLOR}"; }
-function log_error   { echo -e "${MAGENTA}$1${NOCOLOR}"; }
-function log_fatal   { echo -e "${RED}$1${NOCOLOR}"; }
+ts() {
+  date -u +"%Y-%m-%dT%H:%M:%SZ"
+}
+
+log_debug()   { [ "$DEBUG" = "true" ] && printf '%b\n' "${NOCOLOR}$(ts) $1${NOCOLOR}" || true; }
+log_info()    { printf '%b\n' "${GREEN}$(ts) $1${NOCOLOR}"; }
+log_notice()  { printf '%b\n' "${CYAN}$(ts) $1${NOCOLOR}"; }
+log_warning() { printf '%b\n' "${YELLOW}$(ts) $1${NOCOLOR}"; }
+log_error()   { printf '%b\n' "${MAGENTA}$(ts) $1${NOCOLOR}"; }
+log_fatal()   { printf '%b\n' "${RED}$(ts) $1${NOCOLOR}"; }
